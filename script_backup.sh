@@ -7,13 +7,13 @@
 #close $tmp
 
 proc envio {Mensaje} {
-        spawn telnet vippowasmtp.cl.bsch 25
+        spawn telnet {Servidor de Correo} 25
         expect "Microsoft"
         send "helo\n"
         expect "250"
-        send "mail from:pgsttlcap01@santander.cl\n"
+        send "mail from:casilla@correo.cl\n"
         expect "Sender OK"
-        send "rcpt to:<diego.cortes@servexternos.santander.cl>\nrcpt to:<giorgio.coiro@santander.cl>\nrcpt to:<teleco_n2@santander.cl>\n"
+        send "rcpt to:<destinatario1@correo.cl>\nrcpt to:<destinatario@correo.cl>\nrcpt to:<destinatario@correo.cl>\n"
         expect "Recipient OK"
         send "data\n"
         expect "Start mail input"
