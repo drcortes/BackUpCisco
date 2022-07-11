@@ -17,7 +17,7 @@ proc envio {Mensaje} {
         expect "Recipient OK"
         send "data\n"
         expect "Start mail input"
-        send "Content-Type: text/html\nSubject:Falla de Respaldos diarios - Cisco\n\n$Mensaje<br>Se solicita al equipo de 24-7, realizar el backup de la configuración de todos los equipos mencionados en el listado y que estos sean guardados en el equipo PGSTTLCAP01, usuario PLLNX02, ruta /Respaldos/Routeryswitch/AÑO/MES/DIA, ingresando a la carpeta de la fecha correspondiente. En caso de que este listado supere las 10 máquinas favor de redirigir esto con su supervisor para que sea analizado.<br><br><b>Este correo ha sido generado de manera automática, favor NO RESPONDER.</b>\n.\n"
+        send "Content-Type: text/html\nSubject:Falla de Respaldos diarios - Cisco\n\n$Mensaje<br>Se solicita al equipo de 24-7, realizar el backup de la configuración de todos los equipos mencionados en el listado y que estos sean guardados en el equipo , usuario , ruta /Respaldos/Routeryswitch/AÑO/MES/DIA, ingresando a la carpeta de la fecha correspondiente. En caso de que este listado supere las 10 máquinas favor de redirigir esto con su supervisor para que sea analizado.<br><br><b>Este correo ha sido generado de manera automática, favor NO RESPONDER.</b>\n.\n"
         expect "250"
         send "QUIT\n"
         expect "221"
@@ -27,9 +27,9 @@ proc envio {Mensaje} {
 
 proc Respaldo {IP} {
 
-	set key [open /Respaldos/SCRIPT/Cred/cred ]
+	set key [open /Respaldos/SCRIPT/Cred/cred ] #almacenar contraseña cifrada
 	set hash [read $key]
-	set tmp [exec python3 /Respaldos/SCRIPT/Cred/Cifrado.py $hash ]	
+	set tmp [exec python3 /Respaldos/SCRIPT/Cred/Cifrado.py $hash ]	#descifrar contraseña
 	set cred [split $tmp " "]
 	close $key
 
@@ -46,7 +46,7 @@ proc Respaldo {IP} {
 	set month [exec date +%m]
 	set day [exec date +%d]
 	set fallo 0
-	set ListaFalla "Los equipos que no fueron respaldados en el servidor PGSTTLCAP01 son:<br><br>"
+	set ListaFalla "Los equipos que no fueron respaldados en el servidor de respaldos son:<br><br>"
 	set ListaIPFalla {}
 	set log /Respaldos/SCRIPT/regRyS.log
 	if { ![file exists $log] } {
